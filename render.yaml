@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: pg-management-backend
+    runtime: node
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: NODE_ENV
+        value: production
