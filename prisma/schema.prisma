@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Tenant {
+  id             Int       @id @default(autoincrement())
+  name           String
+  phone          String
+  idProofType    String?
+  idProofNumber  String?
+  joiningDate    DateTime?
+  roomId         Int? 
+  room           Room?     @relation(fields: [roomId], references: [id])
+  rentAmount     Float
+  advancePaid    Float     @default(0)
+  isActive       Boolean   @default(true)
+  payments       Payment[]
+  complaints     Complaint[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Room {
+  id         Int      @id @default(autoincrement())
+  roomNumber String   @unique
+  bedCount   Int      @default(1)
+  status     String   @default("VACANT") // VACANT/OCCUPIED/MAINTENANCE
+  tenants    Tenant[] 
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  tenantId  Int
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  month     Int
+  year      Int
+  amount    Float
+  dueDate   DateTime
+  paidDate  DateTime?
+  status    String   @default("UNPAID") // PAID/UNPAID
+  createdAt DateTime @default(now())
+}
+
+model Complaint {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int?
+  tenant      Tenant?  @relation(fields:[tenantId], references:[id])
+  roomId      Int?
+  title       String
+  description String
+  status      String   @default("OPEN") // OPEN/IN_PROGRESS/RESOLVED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Staff {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String
+  phone     String
+  shift     String?
+  createdAt DateTime @default(now())
+}
+
+// Document model removed

@@ -1,0 +1,80 @@
+{
+  "info": {
+    "_postman_id": "pg-management-demo-collection-2025",
+    "name": "PG Management Demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Basic API endpoints for PG Management Demo backend."
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "http://localhost:4000/health", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["health"] }
+      }
+    },
+    {
+      "name": "Login (Demo)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"demo\",\n  \"password\": \"demo123\"\n}" },
+        "url": { "raw": "http://localhost:4000/login", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["login"] }
+      }
+    },
+    {
+      "name": "Tenants",
+      "item": [
+        { "name": "List Tenants", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/tenants", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["tenants"] } } },
+        { "name": "Create Tenant", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"9876543210\"\n}" }, "url": { "raw": "http://localhost:4000/tenants", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["tenants"] } } },
+        { "name": "Get Tenant by ID", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/tenants/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["tenants", "1"] } } },
+        { "name": "Update Tenant", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated Name\"\n}" }, "url": { "raw": "http://localhost:4000/tenants/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["tenants", "1"] } } },
+        { "name": "Delete Tenant", "request": { "method": "DELETE", "url": { "raw": "http://localhost:4000/tenants/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["tenants", "1"] } } }
+      ]
+    },
+    {
+      "name": "Rooms",
+      "item": [
+        { "name": "List Rooms", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/rooms", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["rooms"] } } },
+        { "name": "Create Room", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"roomNumber\": \"106\",\n  \"bedCount\": 2,\n  \"status\": \"VACANT\"\n}" }, "url": { "raw": "http://localhost:4000/rooms", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["rooms"] } } },
+        { "name": "Get Room by ID", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/rooms/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["rooms", "1"] } } },
+        { "name": "Update Room", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"status\": \"OCCUPIED\"\n}" }, "url": { "raw": "http://localhost:4000/rooms/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["rooms", "1"] } } }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        { "name": "List Payments", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/payments", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["payments"] } } },
+        { "name": "Filter Payments", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/payments?tenantId=1&month=11&year=2024", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["payments"], "query": [ { "key": "tenantId", "value": "1" }, { "key": "month", "value": "11" }, { "key": "year", "value": "2024" } ] } } },
+        { "name": "Create Payment", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"tenantId\": 1,\n  \"month\": 12,\n  \"year\": 2024,\n  \"amount\": 5000\n}" }, "url": { "raw": "http://localhost:4000/payments", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["payments"] } } },
+        { "name": "Update Payment", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"status\": \"PAID\"\n}" }, "url": { "raw": "http://localhost:4000/payments/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["payments", "1"] } } },
+        { "name": "Tenant Payments", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/tenants/1/payments", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["tenants", "1", "payments"] } } }
+      ]
+    },
+    {
+      "name": "Complaints",
+      "item": [
+        { "name": "List Complaints", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/complaints", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["complaints"] } } },
+        { "name": "Create Complaint", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"tenantId\": 1,\n  \"roomId\": 2,\n  \"title\": \"Leaky faucet\",\n  \"description\": \"The faucet in room 2 is leaking.\"\n}" }, "url": { "raw": "http://localhost:4000/complaints", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["complaints"] } } },
+        { "name": "Update Complaint", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"status\": \"RESOLVED\"\n}" }, "url": { "raw": "http://localhost:4000/complaints/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["complaints", "1"] } } }
+      ]
+    },
+    {
+      "name": "Staff",
+      "item": [
+        { "name": "List Staff", "request": { "method": "GET", "url": { "raw": "http://localhost:4000/staff", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["staff"] } } },
+        { "name": "Create Staff", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jane Smith\",\n  \"role\": \"Cleaner\"\n}" }, "url": { "raw": "http://localhost:4000/staff", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["staff"] } } },
+        { "name": "Update Staff", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"role\": \"Manager\"\n}" }, "url": { "raw": "http://localhost:4000/staff/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["staff", "1"] } } },
+        { "name": "Delete Staff", "request": { "method": "DELETE", "url": { "raw": "http://localhost:4000/staff/1", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["staff", "1"] } } }
+      ]
+    },
+    {
+      "name": "Dashboard Stats",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:4000/stats/overview", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["stats", "overview"] }
+      }
+    }
+  ]
+}
