@@ -46,20 +46,27 @@ A complete backend for PG/hostel management, built with Node.js, Express, Postgr
    ```bash
    npm install
    ```
-2. Set up `.env` with your Supabase PostgreSQL connection string.
+2. Set up `.env` with your Supabase PostgreSQL connection string:
+   ```
+   DATABASE_URL="postgresql://user:password@host:port/database"
+   ```
 3. Run migrations:
    ```bash
    npx prisma migrate dev
    ```
-4. Seed sample data:
+4. Generate Prisma client:
+   ```bash
+   npx prisma generate
+   ```
+5. Seed sample data:
    ```bash
    node prisma/seed.js
    ```
-5. Start the server:
+6. Start the server:
    ```bash
-   node index.js
+   npm start
    ```
-6. API runs at `http://localhost:4000`
+7. API runs at `http://localhost:4000`
 
 ---
 
@@ -75,9 +82,56 @@ A complete backend for PG/hostel management, built with Node.js, Express, Postgr
 
 ---
 
-## Deployment
-- Can be deployed to Render, Railway, Heroku, Vercel, or any VPS
-- Uses free cloud PostgreSQL (Supabase)
+## Deployment to Render
+
+### Prerequisites
+- GitHub repository with your code pushed
+- Supabase PostgreSQL database (free tier)
+
+### Steps
+1. **Create a New Web Service on Render**
+   - Go to [Render Dashboard](https://dashboard.render.com/)
+   - Click "New +" → "Web Service"
+   - Connect your GitHub repository
+   - Select the `pg-management-backend` repository
+
+2. **Configure the Service**
+   - **Name**: `pg-management-backend` (or your preferred name)
+   - **Region**: Choose closest to your users
+   - **Branch**: `main`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+   - **Plan**: Free
+
+3. **Add Environment Variables**
+   - Click "Environment" tab
+   - Add the following:
+     - `DATABASE_URL`: Your Supabase PostgreSQL connection string
+     - `NODE_ENV`: `production`
+
+4. **Deploy**
+   - Click "Create Web Service"
+   - Render will automatically build and deploy your app
+   - Your API will be available at `https://your-service-name.onrender.com`
+
+5. **Post-Deployment**
+   - Seed data (if needed): Connect to Render Shell and run `npm run seed`
+   - Test your endpoints using the live URL
+
+### Important Notes
+- Free tier services may spin down after inactivity (cold starts)
+- The `render.yaml` file is already configured for automatic deployment
+- Render automatically runs migrations during build (`npm run build`)
+- Make sure your Supabase database allows connections from Render's IP addresses
+
+---
+
+## Alternative Deployment Platforms
+- **Railway**: Similar setup, connect GitHub and add DATABASE_URL
+- **Heroku**: Use Heroku Postgres or external Supabase
+- **Vercel**: Deploy as serverless functions (requires code modifications)
+- **VPS**: Use PM2 or systemd for process management
 
 ---
 
